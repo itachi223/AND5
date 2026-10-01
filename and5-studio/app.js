@@ -652,7 +652,6 @@
     const form = $('#requestForm', view);
     if (!form) return;
     const success = $('#formSuccess', view);
-    const mailtoLink = $('#mailtoLink', view);
 
     const showError = (input, msg) => {
       const box = $(`[data-error-for="${input.id}"]`, form);
@@ -664,12 +663,13 @@
       if (ev.target.matches('input, textarea')) showError(ev.target, '');
     });
 
-    form.addEventListener('submit', (ev) => {
+    form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const name = $('#f-name', form);
       const contact = $('#f-contact', form);
       const message = $('#f-message', form);
       const topic = $('#f-topic', form);
+      const submitBtn = form.querySelector('button[type="submit"]');
       let ok = true;
 
       if (name.value.trim().length < 2) { showError(name, 'Вкажіть ім\'я'); ok = false; }
@@ -681,17 +681,69 @@
         return;
       }
 
-      const body = `Ім'я: ${name.value.trim()}\nКонтакт: ${contact.value.trim()}\nТема: ${topic.value}\n\n${message.value.trim()}`;
-      const href = `mailto:${AND5.studio.email}?subject=${encodeURIComponent('Заявка з сайту: ' + topic.value)}&body=${encodeURIComponent(body)}`;
-      if (mailtoLink) mailtoLink.href = href;
-
-      form.hidden = true;
-      if (success) {
-        success.hidden = false;
-        success.classList.add('is-shown');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Надсилання...';
       }
-      toastMsg('Заявку готово — лишилось надіслати лист');
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: 'd06225fa-1611-474a-8f55-d784f04599f6',
+            name: name.value.trim(),
+            contact: contact.value.trim(),
+            topic: topic ? topic.value : 'Заявка з сайту',
+            message: message.value.trim()
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          form.reset();
+          form.hidden = true;
+          if (success) {
+            const successTitle = success.querySelector('h3');
+            const successDesc = success.querySelector('p');
+            const mailtoBtn = $('#mailtoLink', success);
+            if (successTitle) successTitle.textContent = 'Дякуємо! Заявку надіслано!';
+            if (successDesc) successDesc.textContent = 'Ми отримали ваше повідомлення і відповімо протягом одного робочого дня.';
+            if (mailtoBtn) mailtoBtn.hidden = true;
+
+            success.hidden = false;
+            success.classList.add('is-shown');
+          }
+          toastMsg('Заявку успішно надіслано!');
+        } else {
+          toastMsg('Помилка надсилання. Спробуйте пізніше.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+          }
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        toastMsg('Помилка мережі. Спробуйте ще раз.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      }
     });
+
+    const resetBtn = $('#resetForm', view);
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (success) success.hidden = true;
+        form.hidden = false;
+      });
+    }
   }
 
   function initCopy() {
