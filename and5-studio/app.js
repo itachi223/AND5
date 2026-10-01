@@ -695,7 +695,7 @@
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            access_key: 'd06225fa-1611-474a-8f55-d784f04599f6',
+            access_key: 'fc540575-b273-48d3-ae37-204c0d7db15b',
             name: name.value.trim(),
             contact: contact.value.trim(),
             topic: topic ? topic.value : 'Заявка з сайту',
