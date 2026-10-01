@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#E4002B" />
+<title>And5 Studio — студія українського дубляжу</title>
+<meta name="description" content="And5 Studio — студія українського дубляжу та переозвучки. Аніме, фільми, серіали, ігри й YouTube — з будь-якої мови українською. Новини, роботи та співпраця." />
+<meta property="og:title" content="And5 Studio — український дубляж" />
+<meta property="og:description" content="Голоси, які звучать як оригінал. Дубляж і переозвучка з будь-якої мови українською: аніме, фільми, серіали, ігри та YouTube." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Перехід-«шторка» між вкладками -->
+<div class="wipe" id="wipe" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<a class="skip-link" href="#view">Перейти до контенту</a>
+
+<header class="topbar" id="topbar">
+  <div class="shell topbar__inner">
+
+    <a class="brand" href="#/" aria-label="And5 Studio — на головну">
+      <span class="brand__mark" aria-hidden="true">
+        <img src="assets/logo.png" alt="" width="46" height="46" />
+      </span>
+      <span class="brand__text">
+        <strong>And5</strong>
+        <em>studio · укр. дубляж</em>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Головна навігація">
+      <span class="nav__pill" id="navPill" aria-hidden="true"></span>
+      <a href="#/" data-route="home">Головна</a>
+      <a href="#/news" data-route="news">Новини</a>
+      <a href="#/works" data-route="works">Роботи</a>
+      <a href="#/team" data-route="team">Команда</a>
+      <a href="#/contacts" data-route="contacts">Контакти</a>
+    </nav>
+
+    <a class="btn btn--sm topbar__cta" href="#/contacts">Замовити дубляж</a>
+
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="view" class="view" tabindex="-1"></main>
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <div class="footer__brand">
+      <div class="brand brand--footer">
+        <span class="brand__mark brand__mark--tile" aria-hidden="true">
+          <img src="assets/logo.png" alt="" width="52" height="52" />
+        </span>
+        <span class="brand__text">
+          <strong>And5</strong>
+          <em>studio</em>
+        </span>
+      </div>
+      <p class="footer__note">
+        Студія українського дубляжу й озвучення. Робимо так, щоб глядач забув,
+        що дивиться дубляж.
+      </p>
+      <div class="footer__socials" id="footerSocials"></div>
+    </div>
+
+    <nav class="footer__col" aria-label="Розділи">
+      <h4>Розділи</h4>
+      <a href="#/">Головна</a>
+      <a href="#/news">Новини</a>
+      <a href="#/works">Роботи</a>
+      <a href="#/team">Команда</a>
+      <a href="#/contacts">Контакти</a>
+    </nav>
+
+    <nav class="footer__col" aria-label="Послуги">
+      <h4>Послуги</h4>
+      <a href="#/works">Дубляж</a>
+      <a href="#/works">Багатоголосе озвучення</a>
+      <a href="#/works">Локалізація ігор</a>
+      <a href="#/works">Аудіокниги</a>
+      <a href="#/works">Реклама та промо</a>
+    </nav>
+
+    <div class="footer__col" id="footerContacts">
+      <h4>Зв'язок</h4>
+    </div>
+  </div>
+
+  <div class="shell footer__bottom">
+    <span id="footerCopy">© And5 Studio</span>
+    <span>Зроблено з любов'ю до українського голосу</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
